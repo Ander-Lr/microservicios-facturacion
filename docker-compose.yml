@@ -1,0 +1,90 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: mi_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: mibasedatos
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # ------------------------------------------------------------------
+  # pgAdmin - interfaz web para administrar PostgreSQL
+  #   URL:        http://localhost:5050
+  #   Login web:  Email: admin@admin.com | Contraseña: admin
+  #
+  #   Para registrar el servidor dentro de pgAdmin (Add New Server):
+  #     Host:          postgres   (nombre del servicio, NO localhost)
+  #     Puerto:        5432
+  #     Base de datos: mibasedatos
+  #     Usuario:       admin
+  #     Contraseña:    1234
+  # ------------------------------------------------------------------
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: mi_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
+  # ------------------------------------------------------------------
+  # MySQL
+  #   Host (desde tu PC):          localhost:3306
+  #   Host (desde otro contenedor): mysql:3306
+  #   Usuario root:  root  | Contraseña: 1234
+  #   Usuario app:   admin | Contraseña: 1234
+  #   Base de datos: mibasedatos
+  # ------------------------------------------------------------------
+  mysql:
+    image: mysql:8.0
+    container_name: mi_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: mibasedatos
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # ------------------------------------------------------------------
+  # MySQL Workbench (versión web, se usa desde el navegador)
+  #   URL: http://localhost:8081
+  #
+  #   Para crear la conexión dentro de Workbench (MySQL Connections → +):
+  #     Hostname: mysql   (nombre del servicio, NO localhost)
+  #     Puerto:   3306
+  #     Usuario:  root  (contraseña 1234)  o  admin (contraseña 1234)
+  # ------------------------------------------------------------------
+  workbench:
+    image: lscr.io/linuxserver/mysql-workbench:latest
+    container_name: mi_workbench
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/Guayaquil
+    ports:
+      - "8081:3000"
+    volumes:
+      - workbench_data:/config
+    cap_add:
+      - IPC_LOCK
+    shm_size: "1gb"
+    depends_on:
+      - mysql
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  mysql_data:
+  workbench_data:

@@ -1,0 +1,40 @@
+# Dependencias (se reinstalan con bun install)
+node_modules/
+
+# Archivos de compilación
+out/
+dist/
+build/
+*.tgz
+
+# Cobertura de pruebas
+coverage/
+*.lcov
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+bun-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Variables de entorno (contienen credenciales: NO subir)
+.env
+.env.*
+# ...excepto la plantilla de ejemplo
+!.env.example
+
+# Cachés
+.eslintcache
+.cache/
+*.tsbuildinfo
+
+# Editores e IDEs
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
