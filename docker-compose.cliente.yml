@@ -1,0 +1,15 @@
+services:
+  postgres-cliente:
+    image: postgres:16
+    container_name: postgres-cliente
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: car73h
+      POSTGRES_DB: cliente
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_cliente_data:/var/lib/postgresql/data
+
+volumes:
+  pg_cliente_data:

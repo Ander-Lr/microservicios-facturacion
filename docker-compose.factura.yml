@@ -1,0 +1,15 @@
+services:
+  mongo-factura:
+    image: mongo:8
+    container_name: mongo-factura
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: factura
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_factura_data:/data/db
+
+volumes:
+  mongo_factura_data:
