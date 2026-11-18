@@ -32,11 +32,14 @@
               "descuento": {
                 "nullable": false,
                 "type": {
-                  "codecId": "mongo/decimal128@1",
+                  "codecId": "mongo/double@1",
                   "kind": "scalar"
                 }
               },
               "detalles_factura": {
+                "many": {
+                  "elementNullable": false
+                },
                 "nullable": false,
                 "type": {
                   "entityKind": "valueObject",
@@ -56,21 +59,21 @@
               "iva": {
                 "nullable": false,
                 "type": {
-                  "codecId": "mongo/decimal128@1",
+                  "codecId": "mongo/double@1",
                   "kind": "scalar"
                 }
               },
               "total": {
                 "nullable": false,
                 "type": {
-                  "codecId": "mongo/decimal128@1",
+                  "codecId": "mongo/double@1",
                   "kind": "scalar"
                 }
               },
               "total_a_pagar": {
                 "nullable": false,
                 "type": {
-                  "codecId": "mongo/decimal128@1",
+                  "codecId": "mongo/double@1",
                   "kind": "scalar"
                 }
               }
@@ -145,47 +148,50 @@
                       "bsonType": "string"
                     },
                     "descuento": {
-                      "bsonType": "decimal"
+                      "bsonType": "double"
                     },
                     "detalles_factura": {
-                      "additionalProperties": false,
-                      "bsonType": "object",
-                      "properties": {
-                        "cantidad": {
-                          "bsonType": "int"
+                      "bsonType": "array",
+                      "items": {
+                        "additionalProperties": false,
+                        "bsonType": "object",
+                        "properties": {
+                          "cantidad": {
+                            "bsonType": "int"
+                          },
+                          "cod_factura": {
+                            "bsonType": "int"
+                          },
+                          "cod_producto": {
+                            "bsonType": "int"
+                          },
+                          "codigo": {
+                            "bsonType": "int"
+                          },
+                          "subtotal": {
+                            "bsonType": "double"
+                          }
                         },
-                        "cod_factura": {
-                          "bsonType": "int"
-                        },
-                        "cod_producto": {
-                          "bsonType": "int"
-                        },
-                        "codigo": {
-                          "bsonType": "int"
-                        },
-                        "subtotal": {
-                          "bsonType": "double"
-                        }
-                      },
-                      "required": [
-                        "cantidad",
-                        "cod_factura",
-                        "cod_producto",
-                        "codigo",
-                        "subtotal"
-                      ]
+                        "required": [
+                          "cantidad",
+                          "cod_factura",
+                          "cod_producto",
+                          "codigo",
+                          "subtotal"
+                        ]
+                      }
                     },
                     "fecha": {
                       "bsonType": "date"
                     },
                     "iva": {
-                      "bsonType": "decimal"
+                      "bsonType": "double"
                     },
                     "total": {
-                      "bsonType": "decimal"
+                      "bsonType": "double"
                     },
                     "total_a_pagar": {
-                      "bsonType": "decimal"
+                      "bsonType": "double"
                     }
                   },
                   "required": [
@@ -252,7 +258,7 @@
         "kind": "mongo-database"
       }
     },
-    "storageHash": "898472ff9bf163645015f713e41bdac0867971abe9d79b6a0d90705da603b13e"
+    "storageHash": "5480a96448725fb984b65bae825bb8a780fae4d82664c36b5e6359870e458f09"
   },
   "capabilities": {},
   "extensions": {},
